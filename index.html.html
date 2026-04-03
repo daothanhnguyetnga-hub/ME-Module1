@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ôn tập Module 1: Management Essentials</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .progress-transition { transition: width 0.5s ease-in-out; }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-3xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+            <h1 class="text-2xl font-bold text-slate-800 mb-1">Tóm tắt Module 1</h1>
+            <p class="text-slate-500 mb-6 font-medium">Management Essentials (ME)</p>
+            
+            <div class="space-y-2">
+                <div class="flex justify-between items-end text-sm">
+                    <span class="font-semibold text-slate-700">Tiến độ ghi nhớ</span>
+                    <span id="progress-text" class="font-bold text-blue-600 text-lg">0%</span>
+                </div>
+                <div class="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-blue-500 progress-transition" style="width: 0%"></div>
+                </div>
+                <p class="text-xs text-slate-400 mt-1 italic">* Dữ liệu được lưu tự động trên trình duyệt này.</p>
+            </div>
+        </div>
+
+        <div id="content" class="space-y-4">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 font-bold text-slate-700">
+                    1. CHUẨN HÓA TƯ DUY QUẢN LÝ
+                </div>
+                <div class="p-4 space-y-3" id="sec-1"></div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 font-bold text-slate-700">
+                    2. HIỂU ĐÚNG VAI TRÒ QUẢN LÝ
+                </div>
+                <div class="p-4 space-y-3" id="sec-2"></div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 font-bold text-slate-700">
+                    3. NHÓM NĂNG LỰC QUẢN LÝ THIẾT YẾU
+                </div>
+                <div class="p-4 space-y-3" id="sec-3"></div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="px-6 py-4 bg-slate-50 border-b border-slate-200 font-bold text-slate-700">
+                    4. CÁC NĂNG LỰC CỐT LÕI CẦN CÓ
+                </div>
+                <div class="p-4 space-y-3" id="sec-4"></div>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center pb-12">
+            <button onclick="resetAll()" class="text-slate-400 hover:text-red-500 text-sm font-medium transition-colors">
+                🔄 Xóa tất cả và làm lại từ đầu
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            { sec: 1, label: "Chuyển đổi cốt lõi: Doer → Manager", desc: "Từ người làm → người tạo kết quả qua đội ngũ" },
+            { sec: 1, label: "Nhận diện 4 sai lầm phổ biến", desc: "Làm thay, ngại giao việc, thiếu theo dõi, cảm tính" },
+            { sec: 1, label: "Tư duy đúng của Quản lý", desc: "Quản lý là đạt kết quả thông qua nỗ lực của người khác" },
+            
+            { sec: 2, label: "Cân bằng 3 yếu tố", desc: "Con người (People) - Quy trình (Process) - Kết quả (Performance)" },
+            
+            { sec: 3, label: "L – Lead: Dẫn dắt", desc: "Năng lực dẫn dắt trong mô hình L.M.D" },
+            { sec: 3, label: "M – Manage: Quản lý công việc", desc: "Năng lực quản lý trong mô hình L.M.D" },
+            { sec: 3, label: "D – Develop: Phát triển đội ngũ", desc: "Năng lực phát triển trong mô hình L.M.D" },
+
+            { sec: 4, label: "Chuyển hóa mục tiêu thành hành động", desc: "Mô hình GAME: Biến mục tiêu thành định hướng rõ ràng" },
+            { sec: 4, label: "Thuyết phục & định hướng (PPF)", desc: "Past – Present – Future: Giúp đội ngũ hiểu vì sao cần thay đổi" },
+            { sec: 4, label: "Giao tiếp thích ứng", desc: "Ứng dụng Trắc nghiệm tâm lý hình học của Dellinger" },
+            { sec: 4, label: "Giao tiếp truyền cảm hứng (5M)", desc: "Meaning – Milestone – Mirror – Model – Momentum" },
+            { sec: 4, label: "Phát triển năng lực đội ngũ", desc: "3 phương pháp: Đào tạo, Coaching, Giao việc" },
+            { sec: 4, label: "Xử lý kháng cự & xây dựng đội nhóm", desc: "Mô hình LACE: Listen – Acknowledge – Clarify – Explain" }
+        ];
+
+        function render() {
+            const content = {};
+            [1, 2, 3, 4].forEach(s => document.getElementById(`sec-${s}`).innerHTML = '');
+
+            data.forEach((item, index) => {
+                const container = document.getElementById(`sec-${item.sec}`);
+                const isChecked = localStorage.getItem(`me-item-${index}`) === 'true';
+                
+                const div = document.createElement('div');
+                div.className = `flex items-start p-3 rounded-lg cursor-pointer border-2 transition-all ${isChecked ? 'bg-blue-50 border-blue-200' : 'hover:bg-slate-50 border-transparent'}`;
+                div.innerHTML = `
+                    <input type="checkbox" id="check-${index}" ${isChecked ? 'checked' : ''} class="mt-1 mr-3 h-5 w-5 text-blue-600 rounded border-slate-300 cursor-pointer" onchange="toggle(${index})">
+                    <label for="check-${index}" class="cursor-pointer flex-1 text-sm">
+                        <div class="font-bold ${isChecked ? 'text-blue-800' : 'text-slate-700'}">${item.label}</div>
+                        <div class="${isChecked ? 'text-blue-600/70' : 'text-slate-500'}">${item.desc}</div>
+                    </label>
+                `;
+                container.appendChild(div);
+            });
+            updateProgress();
+        }
+
+        function toggle(index) {
+            const checkbox = document.getElementById(`check-${index}`);
+            localStorage.setItem(`me-item-${index}`, checkbox.checked);
+            render();
+        }
+
+        function updateProgress() {
+            const total = data.length;
+            const checked = data.filter((_, i) => localStorage.getItem(`me-item-${i}`) === 'true').length;
+            const percent = Math.round((checked / total) * 100);
+            
+            document.getElementById('progress-bar').style.width = percent + '%';
+            document.getElementById('progress-text').innerText = percent + '%';
+        }
+
+        function resetAll() {
+            if(confirm("Bạn muốn xóa hết tiến độ để học lại từ đầu?")) {
+                data.forEach((_, i) => localStorage.removeItem(`me-item-${i}`));
+                render();
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>
