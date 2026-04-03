@@ -14,9 +14,13 @@
 <body class="p-4 md:p-8">
     <div class="max-w-3xl mx-auto">
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
-            <h1 class="text-2xl font-bold text-slate-800 mb-1">Tóm tắt Module 1</h1>
-            <p class="text-slate-500 mb-6 font-medium">Management Essentials (ME)</p>
+            <h1 class="text-2xl font-bold text-slate-800 mb-1 text-left">Tóm tắt Module 1</h1>
+            <p class="text-slate-500 mb-4 font-medium text-left italic">Management Essentials (ME)</p>
             
+            <p class="text-slate-600 mb-6 text-sm leading-relaxed">
+                Hãy đọc và đánh dấu ( <span class="font-bold">☑</span> ) vào những nội dung bạn <span class="font-bold text-slate-800">còn nhớ và đã nắm vững</span>. Dữ liệu sẽ được tự động lưu lại trên trình duyệt của bạn.
+            </p>
+
             <div class="space-y-2">
                 <div class="flex justify-between items-end text-sm">
                     <span class="font-semibold text-slate-700">Tiến độ ghi nhớ</span>
@@ -25,7 +29,6 @@
                 <div class="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div id="progress-bar" class="h-full bg-blue-500 progress-transition" style="width: 0%"></div>
                 </div>
-                <p class="text-xs text-slate-400 mt-1 italic">* Dữ liệu được lưu tự động trên trình duyệt này.</p>
             </div>
         </div>
 
@@ -87,7 +90,6 @@
         ];
 
         function render() {
-            const content = {};
             [1, 2, 3, 4].forEach(s => document.getElementById(`sec-${s}`).innerHTML = '');
 
             data.forEach((item, index) => {
